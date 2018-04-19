@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-""" Jira Command Line Interface Tool """
+""" Jira Command Line Interface Tool.
+
+    This will be expanded to create/update and find jira issues.
+    Currently it just lists all projects and issues.
+"""
 from __future__ import print_function
 
 import logging
@@ -25,9 +29,13 @@ def run(server):
         jc = jiracore.JiraCore(log, server)
         jira_con = jc.connect_jira()
 
+        # Get list of all jira projects
         projects = jc.list_projects(jira_con)
+
+        # Fpr each project, list the issues in it.
         for p in projects:
             jc.list_issues(jira_con,'project={}'.format(str(p)))
+
         return 0
     except Exception as e:
         print('jiracli.py failed: {}'.format(str(e)))
